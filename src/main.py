@@ -166,7 +166,7 @@ def get_prompts_for_country_text(country):
 def get_prompts_for_all(country):
     All_prompts = {
             "Germany": [
-            "Determine if theres any mention of trusted shops in English or German. Reply yes or no. If yes, indicate where it is in the text, provide the German original,give details ",
+            "Determine if theres any mention of trusted shops in English or German. Reply yes or no. If yes, provide the German original,give details ",
             "Determine if the following text is in German. Respond with 'yes' or 'no' and briefly explain your reasoning in one sentence:,give details ",
             "Identify any occurrences of 'sale', 'Rabatt', 'Ermäßigung', or 'Schlussverkauf', or similar terms in English or German in the text. Respond 'yes' or 'no'. If 'yes',give details ",
             "Search for terms related to returns like 'return', 'Rücksendung', 'Rückversand', 'Rückgabe', 'Rücksendung Informationen', 'Rückerstattung', or similar in English or German. Reply 'yes' or 'no'. If 'yes', locate these terms in the text, give the original German text,give details",
