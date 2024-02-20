@@ -66,7 +66,7 @@ st.markdown("""
 def get_prompts_for_country_text(country):
     prompts_dict = {
         "Germany": [
-        "Determine if there's any mention of 'trusted shops' in English or German. Reply 'yes' or 'no'. If 'yes', indicate where it is in the text, provide the German original, and describe its location in the OCR-extracted image: {full_text}",
+        "Determine if there's any mention of trusted shops badge or logo ? . Reply 'yes' or 'no'. If 'yes', indicate where it is in the text, provide the German original, and describe its location in the OCR-extracted image: {full_text}",
         "Determine if the following text is in German. Respond with 'yes' or 'no' and briefly explain your reasoning in one sentence: {full_text}",
         "Identify any occurrences of 'sale', 'Rabatt', 'Ermäßigung', or 'Schlussverkauf', or similar terms in English or German in the text. Respond 'yes' or 'no'. If 'yes', indicate the location in the text and provide the original German phrase. Note: The text is OCR-extracted from an image. Also, specify its position in the image: {full_text}",
         "Search for terms related to returns like 'return', 'Rücksendung', 'Rückversand', 'Rückgabe', 'Rücksendung Informationen', 'Rückerstattung', or similar in English or German. Reply 'yes' or 'no'. If 'yes', locate these terms in the text, give the original German text, and describe their location in the image (OCR-extracted): {full_text}",
@@ -166,6 +166,8 @@ def get_prompts_for_country_text(country):
 def get_prompts_for_all(country):
     All_prompts = {
             "Germany": [
+            "Determine if theres any mention of trusted shops logos or badge (not idealo or similar but real trusted shops logo verified). Reply yes or no. If yes, give details ",
+            "Determine if the following text is in German.s Respond with 'yes' or 'no' and briefly explain your reasoning in one sentence:,give details ",
             "Determine if theres any mention of trusted shops in English or German. Reply yes or no. If yes, provide the German original,give details ",
             "Determine if the following text is in German. Respond with 'yes' or 'no' and briefly explain your reasoning in one sentence:,give details ",
             "Identify any occurrences of 'sale', 'Rabatt', 'Ermäßigung', or 'Schlussverkauf', or similar terms in English or German in the text. Respond 'yes' or 'no'. If 'yes',give details ",
@@ -176,6 +178,7 @@ def get_prompts_for_all(country):
             "Identify if there are any instances of FAQ, 'Fragen und Antworten', or 'Fragen & Antworten', or similar in English or German. Answer 'yes' or 'no'. If 'yes', locate these in the text, provide the original German phrase,give details ",
             "Check if there's a phone number in the text. Answer 'yes' or 'no'. If 'yes', please provide the phone number:,give details ",
             "Scan for delivery logos: DHL, Hermes, DPD, UPS, FedEx, Deutsche Post. Yes or no? If yes, which ones,give details",
+            "are there visa,mastercard,paypal logos in this image ? if yes tell me what ar they",
             "Detect payment logos: Visa, Mastercard, PayPal. Present, yes or no? If yes, specify brands .give details",
             "Look for payment logos: Klarna, Sofort, Giropay. Are they in the image? If yes, identify brands.give details",
             "Look for chat support icons , Are they in the image?, start the answer with yes or no ,give details"
@@ -444,7 +447,9 @@ def main():
             image_analysis_results,split_images_paths = analyze_image_for_criteria(screenshot_path, GOOGLE_PROJECT_ID, VERTEX_AI_REGION,prompts=All_prompts)
             
             for path in split_images_paths :
-                file_paths.append(path) 
+                for path2 in path : 
+                    file_paths.append(path2) 
+ 
 
             final_df = pd.DataFrame(columns=['criteria', 'yes/no(1/0)', 'additional_infos'])
 
