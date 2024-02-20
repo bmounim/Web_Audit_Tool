@@ -41,7 +41,7 @@ def split_image_horizontally(image_path, num_splits):
     - image_path: Path to the input image.
     - num_splits: Number of horizontal segments to split the image into.
 
-    Returns:
+    Returns
     - List of paths to the saved horizontal segments of the original image.
     """
     image = PIL_Image.open(image_path)
@@ -112,8 +112,8 @@ def init_vertex_ai(project_id, region):
     vertexai.init(project=project_id, location=region,api_endpoint='us-central1-aiplatform.googleapis.com')
 
 def initialize_model():
-    genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
-    return genai.GenerativeModel("gemini-pro-vision")
+    genai.configure(api_key='AIzaSyCtuEVO7fQKttTO7MHGa0vFKs2E6MV9do4')
+    return genai.GenerativeModel('gemini-pro-vision')
 
 generationConfig = {
     "temperature" : 0.3,
@@ -141,42 +141,55 @@ safety_settings = [
 
 
 
-def analyze_image2(prompt,image1):
+import logging
+def analyze_image2(prompt, image_path):
+    response_text=''
+    try : 
+        # Open the image from the path
+        image = PIL_Image.open(image_path)
+        
+        # Check the image size and thumbnail if necessary
+        width, height = image.size
+        if width > 1024 or height > 1024:
+            image.thumbnail((1024, 1024))
+        
+        # Convert the image to RGB if it's not already in that mode
+        if image.mode in ("RGBA", "LA"):
+            background = PIL_Image.new(image.mode[:-1], image.size, (255, 255, 255))
+            background.paste(image, image.split()[-1])
+            image = background.convert("RGB")
+        else:
+            image = image.convert("RGB")
+        
+        # Save the processed image
+        save_path = "save_path.jpg"
+        image.save(save_path)
 
-    
-    image = PIL_Image.open(image1)
-    width, height = image.size
-    if width > 1024 or height > 1024:
-        image.thumbnail((1024, 1024))
-    
-    
-    # Convert the image to RGB if it's not already in that mode
-    if image.mode in ("RGBA", "LA"):
-        background = PIL_Image.new(image.mode[:-1], image.size, (255, 255, 255))
-        background.paste(image, image.split()[-1])
-        image = background.convert("RGB")
-    else:
-        image = image.convert("RGB")
-    
-    # Save the processed image
-    save_path = "save_path.jpg"
-    image.save(save_path)
-    
-    #image2.save("save_path.jpg", 'JPEG') 
+        # Assuming there's a way to load the image into your model, 
+        # which might look something like this
+        # Note: This part is pseudo-code since the exact implementation depends on your setup
+        image_for_model = Image.load_from_file(save_path)  # This needs to be replaced with your actual method
 
-    image2 = Image.load_from_file(save_path)
+        # Again assuming the existence of a GenerativeModel class
+        gemini_pro_vision_model = GenerativeModel("gemini-1.0-pro-vision")
 
+        # Generate content using the model
+        # This is also pseudo-code and will depend on the specifics of your library/setup
+        model_response = gemini_pro_vision_model.generate_content([prompt, image_for_model], stream=True)
+        
+        # Process model response
+        temp_list = [response.text for response in model_response]  # Assuming this is how you get text from responses
+        response_text = ''.join(temp_list)
+   
+    except ValueError as e:
+            # Handle the case where the model response contains no parts
+            logging.error(f"Failed to extract text from model response for {image_path}: {e}")
+            response_text=f"An error occurred with {image_path}: could not analyze image."
 
-
-    gemini_pro_vision_model = GenerativeModel("gemini-1.0-pro-vision")
-    #image = generative_models.Part.from_uri("gs://cloud-samples-data/ai-platform/flowers/daisy/10559679065_50d2b16f6d.jpg", mime_type="image/jpeg")
-
-    model_response = gemini_pro_vision_model.generate_content([prompt, image2],stream=True,generation_config =generationConfig)
-    #print("model_response\n",model_response)
-    print('here')
-    print(model_response)
-    temp_list = [response.text for response in model_response]
-    response_text = ''.join(temp_list)
+    except Exception as e:
+            # Handle any other exceptions
+            logging.error(f"An unexpected error occurred with {image_path}: {e}")
+            response_text=f"An unexpected error occurred during image analysis of {image_path}."
 
     return response_text
 
@@ -200,7 +213,8 @@ def analyze_image(model, prompt, image):
             # Check size
         if len(bytes_data) > 4194304:  # 4 MB
             raise ValueError("Image size after compression is still too large.")
-
+        print('mounim')
+        print(prompt)
         response = model.generate_content(
         glm.Content(
             parts = [
@@ -217,11 +231,18 @@ def analyze_image(model, prompt, image):
         stream=True,
         generation_config =generationConfig # Setting a maximum output token limit
 )
+        
+                
 
         print(response)
         #response = model.generate_content([prompt, image])
-        response.resolve()
-        response_text=response.text
+        #response.resolve()
+        
+        #response_text=response.text
+        
+        temp_list = [response2.text for response2 in response]
+        response_text = ''.join(temp_list)
+
         return response_text
     
 def process_response(response_text):
@@ -229,8 +250,8 @@ def process_response(response_text):
     return {"yes or no": yes_no, "additional_infos": response_text}
 
 def analyze_image_for_criteria(image_file, project_id, region,prompts):
-    
-    split_image_paths=split_image_vertically(image_file, 7)
+    #init_vertex_ai(project_id,region)
+    split_image_paths=split_image_vertically(image_file, 3)
     num_horizontal_splits=2
     all_horizontal_splits = further_split_images_horizontally(split_image_paths, num_horizontal_splits)
 
@@ -238,10 +259,10 @@ def analyze_image_for_criteria(image_file, project_id, region,prompts):
     for image2 in all_horizontal_splits :
         for image in image2 : 
             
-            #init_vertex_ai(project_id, region)
+            #init_verftex_ai(project_id, region)
             #image = Image.open(image_file)
             model = initialize_model()
-            image= zoom_image(image,50)
+            #image= zoom_image(image,50)
             prompts = prompts
 
 
