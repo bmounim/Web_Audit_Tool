@@ -166,19 +166,19 @@ def get_prompts_for_country_text(country):
 def get_prompts_for_all(country):
     All_prompts = {
             "Germany": [
-            "Determine if there's any mention of 'trusted shops' in English or German. Reply 'yes' or 'no'. If 'yes', indicate where it is in the text, provide the German original ",
-            "Determine if the following text is in German. Respond with 'yes' or 'no' and briefly explain your reasoning in one sentence: ",
-            "Identify any occurrences of 'sale', 'Rabatt', 'Ermäßigung', or 'Schlussverkauf', or similar terms in English or German in the text. Respond 'yes' or 'no'. If 'yes' ",
-            "Search for terms related to returns like 'return', 'Rücksendung', 'Rückversand', 'Rückgabe', 'Rücksendung Informationen', 'Rückerstattung', or similar in English or German. Reply 'yes' or 'no'. If 'yes', locate these terms in the text, give the original German text {full_text}",
-            "Look for phrases like 'free returns', 'Rücksendung kostenlos', 'Kostenlose Lieferung und Rücksendung', or similar in English or German. Answer 'yes' or 'no'. If 'yes', mention where they are found in the text",
-            "Assess if the following text contains delivery-related information. Reply with 'yes' or 'no'. If 'yes', summarize the delivery details: ",
-            "Search for 'free delivery', 'Kostenlose Lieferung', 'gratisversand', 'Standardlieferung - Kostenlos ab', 'Kostenfreier Versand', 'Kostenloser Versand ab', or similar terms in English or German. Respond 'yes' or 'no'. If 'yes'. ",
-            "Identify if there are any instances of FAQ, 'Fragen und Antworten', or 'Fragen & Antworten', or similar in English or German. Answer 'yes' or 'no'. If 'yes', locate these in the text, provide the original German phrase ",
-            "Check if there's a phone number in the text. Answer 'yes' or 'no'. If 'yes', please provide the phone number: ",
-            "Scan for delivery logos: DHL, Hermes, DPD, UPS, FedEx, Deutsche Post. Yes or no? If yes, which ones",
-            "Detect payment logos: Visa, Mastercard, PayPal. Present, yes or no? If yes, specify brands .",
-            "Look for payment logos: Klarna, Sofort, Giropay. Are they in the image? If yes, identify brands.",
-            "Look for chat support icons , Are they in the image?, start the answer with yes or no "
+            "Determine if theres any mention of trusted shops in English or German. Reply yes or no. If yes, indicate where it is in the text, provide the German original,give details ",
+            "Determine if the following text is in German. Respond with 'yes' or 'no' and briefly explain your reasoning in one sentence:,give details ",
+            "Identify any occurrences of 'sale', 'Rabatt', 'Ermäßigung', or 'Schlussverkauf', or similar terms in English or German in the text. Respond 'yes' or 'no'. If 'yes',give details ",
+            "Search for terms related to returns like 'return', 'Rücksendung', 'Rückversand', 'Rückgabe', 'Rücksendung Informationen', 'Rückerstattung', or similar in English or German. Reply 'yes' or 'no'. If 'yes', locate these terms in the text, give the original German text,give details",
+            "Look for phrases like 'free returns', 'Rücksendung kostenlos', 'Kostenlose Lieferung und Rücksendung', or similar in English or German. Answer 'yes' or 'no'. If 'yes', mention where they are found in the text,give details",
+            "Assess if the following text contains delivery-related information. Reply with 'yes' or 'no'. If 'yes', summarize the delivery details:,give details ",
+            "Search for 'free delivery', 'Kostenlose Lieferung', 'gratisversand', 'Standardlieferung - Kostenlos ab', 'Kostenfreier Versand', 'Kostenloser Versand ab', or similar terms in English or German. Respond 'yes' or 'no'. If 'yes'.give details ",
+            "Identify if there are any instances of FAQ, 'Fragen und Antworten', or 'Fragen & Antworten', or similar in English or German. Answer 'yes' or 'no'. If 'yes', locate these in the text, provide the original German phrase,give details ",
+            "Check if there's a phone number in the text. Answer 'yes' or 'no'. If 'yes', please provide the phone number:,give details ",
+            "Scan for delivery logos: DHL, Hermes, DPD, UPS, FedEx, Deutsche Post. Yes or no? If yes, which ones,give details",
+            "Detect payment logos: Visa, Mastercard, PayPal. Present, yes or no? If yes, specify brands .give details",
+            "Look for payment logos: Klarna, Sofort, Giropay. Are they in the image? If yes, identify brands.give details",
+            "Look for chat support icons , Are they in the image?, start the answer with yes or no ,give details"
         
 
 
