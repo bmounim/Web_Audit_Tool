@@ -53,7 +53,7 @@ def split_image_horizontally(image_path, num_splits):
         # Define the bounding box for the current split.
         bbox = (i * split_width, 0, (i + 1) * split_width if (i + 1) < num_splits else width, height)
         split_image = image.crop(bbox)
-        split_image_path = f'horizontal_split_image_{i}.png'
+        split_image_path = f'horizontal_split_image_{i}_{image_path}.png'
         split_image.save(split_image_path)
         split_image_paths.append(split_image_path)
 
@@ -251,7 +251,7 @@ def process_response(response_text):
 
 def analyze_image_for_criteria(image_file, project_id, region,prompts):
     #init_vertex_ai(project_id,region)
-    split_image_paths=split_image_vertically(image_file, 3)
+    split_image_paths=split_image_vertically(image_file, 10)
     num_horizontal_splits=2
     all_horizontal_splits = further_split_images_horizontally(split_image_paths, num_horizontal_splits)
 
@@ -277,4 +277,4 @@ def analyze_image_for_criteria(image_file, project_id, region,prompts):
             data = pd.DataFrame(data)
             all_data.append(data)
 
-    return all_data,split_image_paths
+    return all_data,all_horizontal_splits
