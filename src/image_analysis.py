@@ -262,7 +262,7 @@ def analyze_image_for_criteria(image_file, project_id, region,prompts):
             #init_verftex_ai(project_id, region)
             #image = Image.open(image_file)
             model = initialize_model()
-            #image= zoom_image(image,50)
+            image= zoom_image(image,200)
             prompts = prompts
 
 
