@@ -41,21 +41,6 @@ def get_chromedriver_path():
     return shutil.which('chromedriver')
 
 
-@st.cache_resource(show_spinner=False)
-def get_webdriver_options():
-    options = Options()
-    options.add_argument('ignore-certificate-errors')
-    options.add_argument('--ignore-ssl-errors=yes')
-    options.add_argument("--headless")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--disable-gpu")
-    options.add_argument("--disable-features=NetworkService")
-    options.add_argument("--window-size=1920x1080")
-    options.add_argument("--disable-features=VizDisplayCompositor")
-    return options
-
-
 def get_webdriver_service(logpath):
     service = Service(
         executable_path=get_chromedriver_path(),
@@ -78,17 +63,6 @@ def show_selenium_log(logpath):
         st.warning('No log file found!')
 
 
-def run_selenium(logpath):
-    name = str()
-    with webdriver.Chrome(options=get_webdriver_options(), service=get_webdriver_service(logpath=logpath)) as driver:
-        url = "https://www.unibet.fr/sport/football/europa-league/europa-league-matchs"
-        driver.get(url)
-        xpath = '//*[@class="ui-mainview-block eventpath-wrapper"]'
-        # Wait for the element to be rendered:
-        element = WebDriverWait(driver, 10).until(lambda x: x.find_elements(by=By.XPATH, value=xpath))
-        name = element[0].get_property('attributes')[0]['name']
-    return name
-
 
 class WebScraper:
     def __init__(self):
@@ -105,16 +79,22 @@ class WebScraper:
         self.chrome_options.add_argument('--no-sandbox')
         self.chrome_options.add_argument('--disable-dev-shm-usage')
 
+        self.chrome_driver_path = ChromeDriverManager().install()
+
+        
+        self.service = Service(self.chrome_driver_path)
+        self.service.start()
+
+
         # Initialize the Chrome driver with the defined options
         #self.driver = webdriver.Chrome(service=Service(ChromeDriverManager(driver_version="114.0.5735.90").install()), options=self.chrome_options)
-        self.driver = webdriver.Chrome(options=self.chrome_options, service=get_webdriver_service(logpath=logpath))
-
+        self.driver = webdriver.Chrome(self.chrome_driver_path,options=self.chrome_options)
+        #driver = webdriver.Chrome(chrome_driver_path, options=options)
     def handle_cookies(self, url,xpath_input):
         """
         Handles the cookie consent banner on a given URL.
         :param url: The URL where the cookie banner needs to be handled.
         """
-
         self.driver.get(url)
 
         try:
