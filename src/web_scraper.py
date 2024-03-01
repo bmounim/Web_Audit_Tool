@@ -79,7 +79,7 @@ class WebScraper:
         self.chrome_options.add_argument('--no-sandbox')
         self.chrome_options.add_argument('--disable-dev-shm-usage')
 
-        self.chrome_driver_path = Service(ChromeDriverManager('122.0.6261.94').install())
+        self.chrome_driver_path = ChromeDriverManager('122.0.6261.94').install()
 
         
         self.service = Service(self.chrome_driver_path)
@@ -88,7 +88,7 @@ class WebScraper:
 
         # Initialize the Chrome driver with the defined options
         #self.driver = webdriver.Chrome(service=Service(ChromeDriverManager(driver_version="114.0.5735.90").install()), options=self.chrome_options)
-        self.driver = webdriver.Chrome(service=self.chrome_driver_path,options=self.chrome_options)
+        self.driver = webdriver.Chrome(service=self.service,options=self.chrome_options)
         #driver = webdriver.Chrome(service=chrome_driver_path, options=options)
     def handle_cookies(self, url,xpath_input):
         """
