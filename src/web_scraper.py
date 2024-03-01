@@ -88,8 +88,8 @@ class WebScraper:
 
         # Initialize the Chrome driver with the defined options
         #self.driver = webdriver.Chrome(service=Service(ChromeDriverManager(driver_version="114.0.5735.90").install()), options=self.chrome_options)
-        self.driver = webdriver.Chrome(self.chrome_driver_path,options=self.chrome_options)
-        #driver = webdriver.Chrome(chrome_driver_path, options=options)
+        self.driver = webdriver.Chrome(service=self.chrome_driver_path,options=self.chrome_options)
+        #driver = webdriver.Chrome(service=chrome_driver_path, options=options)
     def handle_cookies(self, url,xpath_input):
         """
         Handles the cookie consent banner on a given URL.
