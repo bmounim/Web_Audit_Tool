@@ -79,7 +79,7 @@ class WebScraper:
         self.chrome_options.add_argument('--no-sandbox')
         self.chrome_options.add_argument('--disable-dev-shm-usage')
 
-        self.chrome_driver_path = ChromeDriverManager().install()
+        self.chrome_driver_path = ChromeDriverManager('122.0.6261.94').install()
 
         
         self.service = Service(self.chrome_driver_path)
