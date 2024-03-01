@@ -251,8 +251,8 @@ def process_response(response_text):
 
 def analyze_image_for_criteria(image_file, project_id, region,prompts):
     #init_vertex_ai(project_id,region)
-    split_image_paths=split_image_vertically(image_file, 5)
-    num_horizontal_splits=2
+    split_image_paths=split_image_vertically(image_file, 1)
+    num_horizontal_splits=1
     all_horizontal_splits = further_split_images_horizontally(split_image_paths, num_horizontal_splits)
 
     all_data=[]
@@ -262,9 +262,8 @@ def analyze_image_for_criteria(image_file, project_id, region,prompts):
             #init_verftex_ai(project_id, region)
             #image = Image.open(image_file)
             model = initialize_model()
-            image= zoom_image(image,200)
+            #image= zoom_image(image,200)
             prompts = prompts
-
 
             data = []
             
