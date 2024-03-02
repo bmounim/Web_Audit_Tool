@@ -10,7 +10,7 @@ import google.ai.generativelanguage as glm
 import google.generativeai as genai
 import io
 import streamlit as st
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "GCP.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "GCP_keys3.json"
 #from PIL import Image
 from google.cloud import aiplatform
 
