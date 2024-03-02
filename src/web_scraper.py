@@ -122,7 +122,7 @@ class WebScraper:
         except Exception as e:
             print(f"Cookie banner not found or could not be clicked: {str(e)}")
 
-def capture_and_return_fullpage_screenshot(self, url):
+    def capture_and_return_fullpage_screenshot(self, url):
         """
         Captures and returns a full-page screenshot of a given URL.
         :param url: The URL to capture the screenshot.
