@@ -122,7 +122,7 @@ class WebScraper:
         except Exception as e:
             print(f"Cookie banner not found or could not be clicked: {str(e)}")
 
-    def capture_and_return_fullpage_screenshot(self, url):
+def capture_and_return_fullpage_screenshot(self, url):
         """
         Captures and returns a full-page screenshot of a given URL.
         :param url: The URL to capture the screenshot.
@@ -134,9 +134,14 @@ class WebScraper:
         screenshot_ob = Screenshot.Screenshot()
 
         image_name = 'screenshot.png'
-        screenshot_path = os.path.join(os.getcwd(), image_name)
-        screenshot_ob.full_screenshot(self.driver, save_path='.', image_name=image_name, is_load_at_runtime=True, load_wait_time=3)
+        screenshot_path = os.path.join(os.getcwd(), image_name)        #screenshot_ob.full_screenshot(self.driver, save_path='.', image_name=image_name, is_load_at_runtime=True, load_wait_time=3)
 
+        height = self.driver.execute_script('return document.documentElement.scrollHeight')
+        width  = self.driver.execute_script('return document.documentElement.scrollWidth')
+        self.driver.set_window_size(width, height)  # the trick
+
+        time.sleep(2)
+        self.driver.save_screenshot(screenshot_path)
 
         print(f"Screenshot saved at {screenshot_path}")
         #self.driver.execute_script("return document.readyState")
